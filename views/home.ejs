@@ -18,14 +18,14 @@
 </head>
 
 <body>
-  <h1>Have fun! 🥔</h1>
-  <% for (const user of users) {%>
+  <h1>Story Creator 📖</h1>
+  <% for (const story of stories) {%>
 
     <div>
-      <%= user.username %>
+      <%= story.title %>
     </div>
     <div>
-      <%= user.password %>
+      <%= story.description %>
     </div>
 
     <% } %>

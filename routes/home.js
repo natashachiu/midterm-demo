@@ -7,15 +7,15 @@
 
 const express = require('express');
 const router = express.Router();
-const userQueries = require('../db/queries/01_users');
+// const userQueries = require('../db/queries/01_users');
+const storyQueries = require('../db/queries/02_stories');
+
 
 router.get('/', (req, res) => {
 
-  // return res.render('home');
-  userQueries.getUsers()
-    .then(users => {
-      const templateVars = { users };
-      console.log(users);
+  storyQueries.getAllStories()
+    .then(stories => {
+      const templateVars = { stories };
       return res.render('home', templateVars);
     })
     .catch(err => {
@@ -24,11 +24,12 @@ router.get('/', (req, res) => {
         .json({ error: err.message });
     });
 });
-router.get('/:id',(req,res)=>{
-  userQueries.getUserById(req.params.id)
-      .then(user=>{
-       console.log(res.json(user));
-      })
-})
+
+router.get('/:id', (req, res) => {
+  storyQueries.getIndividualStories(req.params.id)
+    .then(story => {
+      console.log(res.json(story));
+    });
+});
 
 module.exports = router;
