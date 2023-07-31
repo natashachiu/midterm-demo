@@ -7,7 +7,7 @@
 
 const express = require('express');
 const router = express.Router();
-const userQueries = require('../db/queries/users');
+const userQueries = require('../db/queries/01_users');
 
 router.get('/', (req, res) => {
 
@@ -24,5 +24,11 @@ router.get('/', (req, res) => {
         .json({ error: err.message });
     });
 });
+router.get('/:id',(req,res)=>{
+  userQueries.getUserById(req.params.id)
+      .then(user=>{
+       console.log(res.json(user));
+      })
+})
 
 module.exports = router;
