@@ -5,9 +5,18 @@ require('dotenv').config();
 const sassMiddleware = require('./lib/sass-middleware');
 const express = require('express');
 const morgan = require('morgan');
+const cookieSession = require('cookie-session');
 
 const PORT = process.env.PORT || 8080;
 const app = express();
+
+
+app.use(cookieSession({
+  name: 'session',
+  keys: ['secret'],
+  maxAge: 24 * 60 * 60 * 1000 // 24 hours
+}));
+
 
 app.set('view engine', 'ejs');
 
@@ -57,3 +66,11 @@ app.get('/', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
+
+// User login
+app.get('/login/:id', (req, res) => {
+  req.session.userid = req.params.id;
+  // send user to home
+  res.redirect('/');
+});
+
