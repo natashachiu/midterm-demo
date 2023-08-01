@@ -24,13 +24,6 @@ router.get('/', (req, res) => {
     });
 });
 
-router.get('/:id', (req, res) => {
-  storyQueries.getIndividualStories(req.params.id)
-    .then(story => {
-      console.log(res.json(story));
-    });
-});
-
 
 
 
