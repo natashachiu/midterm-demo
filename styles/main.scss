@@ -22,3 +22,29 @@ align-self: center;
 }
 
 }
+.body-form{
+  display:flex;
+  flex-direction: column;
+  padding: 40px;
+  justify-content: center;
+  align-items: center;
+
+  label {
+    margin-right: 40px;
+  }
+
+textarea{
+   width: 100%;
+   background-color: orange;
+}
+.form-select{
+  width: 80%;
+  background-color: rgb(67, 67, 100);
+}
+button{
+  width: 60%;
+  margin-top:30px;
+  height: 15vh;
+  background-color: blue;
+}
+}

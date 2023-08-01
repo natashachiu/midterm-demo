@@ -10,7 +10,6 @@ const router = express.Router();
 // const userQueries = require('../db/queries/01_users');
 const storyQueries = require('../db/queries/02_stories');
 
-
 router.get('/', (req, res) => {
 
   storyQueries.getAllStories()
@@ -31,5 +30,8 @@ router.get('/:id', (req, res) => {
       console.log(res.json(story));
     });
 });
+
+
+
 
 module.exports = router;

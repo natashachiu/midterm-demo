@@ -42,6 +42,8 @@ app.use(express.static('public'));
 // const usersRoutes = require('./routes/users');
 
 const homeRoute = require('./routes/home');
+const storyRoute = require('./routes/story');
+
 
 
 // Mount all resource routes
@@ -52,6 +54,8 @@ const homeRoute = require('./routes/home');
 // app.use('/users', usersRoutes);
 
 app.use('/home', homeRoute);
+app.use('/story',storyRoute);
+
 // Note: mount other resources here, using the same pattern above
 
 // Home page
