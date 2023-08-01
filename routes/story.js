@@ -45,7 +45,6 @@ router.get('/:id/contribute', (req, res) => {
         story,
         contributions
       };
-      console.log(templateVars);
       res.render('contribute', templateVars);
     });
 });
@@ -59,6 +58,26 @@ router.post('/:id/contribute', (req, res) => {
 
   contributionQueries.addContribution(newContribution)
     .then(() => res.redirect(`/story/${req.params.id}/contribute`));
+});
+
+
+router.post('/:id', (req, res) => {
+
+  const contributionId = parseInt(req.body.contribution);
+  let story = {};
+
+  storyQueries.getIndividualStories(req.params.id)
+    .then(data => {
+      story = data;
+    })
+    .then(() => contributionQueries.getIndividualContribution(contributionId))
+    .then(data => {
+      const content = story.content + " " + data.contribution_content;
+      const storyId = req.params.id;
+      storyQueries.appendToStory(storyId, content);
+    })
+    .then(() => contributionQueries.removeContribution(contributionId))
+    .then(() => res.redirect(`/story/${req.params.id}`));
 });
 
 module.exports = router;

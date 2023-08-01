@@ -12,4 +12,14 @@ const getIndividualStories = (storyId) => {
       return story.rows ? story.rows[0] : null;
     });
 };
-module.exports = { getAllStories, getIndividualStories };
+
+const appendToStory = (storyId, content) => {
+  const queryString = 'UPDATE stories SET content = $1 WHERE id = $2 RETURNING *;';
+  return db.query(queryString, [content, storyId])
+    .then(story => {
+      return story.rows ? story.rows[0] : null;
+    });
+};
+
+
+module.exports = { getAllStories, getIndividualStories, appendToStory };

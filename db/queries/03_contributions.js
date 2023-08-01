@@ -6,12 +6,12 @@ const getContributionsForStory = (storyId) => {
       return data.rows;
     });
 };
-// const getIndividualContribution = (contributionId) => {
-//   return db.query('SELECT * FROM contributions WHERE id = $1', [contributionId])
-//     .then(contribution => {
-//       return contribution.rows[0];
-//     });
-// };
+const getIndividualContribution = (contributionId) => {
+  return db.query('SELECT * FROM contributions WHERE id = $1;', [contributionId])
+    .then(data => {
+      return data.rows[0];
+    });
+};
 
 const addContribution = (newCont) => {
   const queryString = `INSERT INTO contributions (story_id, user_id, contribution_content)
@@ -22,4 +22,9 @@ const addContribution = (newCont) => {
   return db.query(queryString, queryParams)
     .then(result => result.rows[0]);
 };
-module.exports = { getContributionsForStory, addContribution };
+
+const removeContribution = (contributionId) => {
+  return db.query('DELETE FROM contributions WHERE id = $1 RETURNING *;', [contributionId])
+    .then(result => result.rows);
+};
+module.exports = { getContributionsForStory, getIndividualContribution, addContribution, removeContribution };
