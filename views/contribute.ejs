@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Story</title>
+
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css"
+    integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous" />
+  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
+  <link rel="stylesheet" href="/vendor/border-box.css" />
+  <link rel="stylesheet" href="/styles/main.css" />
+  <link rel="stylesheet" href="/styles/layout.css" />
+
+  <script src="/vendor/jquery-3.0.0.js"></script>
+  <script defer src="/scripts/app.js"></script>
+</head>
+
+<body>
+  <%- include('partials/_header') %>
+
+    <h1>
+      <%= story.title %>
+    </h1>
+
+    <article>
+      <p>
+        <%= story.username %>
+      </p>
+      <p>
+        <%= story.created_at %>
+      </p>
+    </article>
+
+    <section>
+      <h4>Story</h4>
+      <div>
+        <%= story.content %>
+      </div>
+    </section>
+
+
+    <section>
+      <h3>Contributions</h3>
+
+    </section>
+    <% for (const contribution of contributions) {%>
+
+      <div>
+        <%= contribution.contribution_content %>
+      </div>
+
+      <% } %>
+        <form action="/story/<%= story.id %>" method="post">
+          <button type="submit">Add Contribution</button>
+        </form>
+
+        <section>
+          <h4>Add your own contribution</h4>
+          <form action="/story/<%= story.id %>/contribute" method="post">
+            <div>
+              <input type="text" name="content">
+              <button type="submit">Publish</button>
+            </div>
+          </form>
+        </section>
+
+
+</body>
+
+</html>

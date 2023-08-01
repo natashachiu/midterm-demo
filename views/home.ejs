@@ -19,17 +19,17 @@
 
 <body>
   <%- include('partials/_header') %>
-  
-  <% for (const story of stories) {%>
 
-    <div>
-      <%= story.title %>
-    </div>
-    <div>
-      <%= story.description %>
-    </div>
+    <% for (const story of stories) {%>
 
-    <% } %>
+      <div>
+        <%= story.title %>
+      </div>
+      <div>
+        <%= story.description %>
+      </div>
+
+      <% } %>
 </body>
 
 </html>
