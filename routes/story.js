@@ -56,6 +56,8 @@ router.post('/:id/contribute', (req, res) => {
   newContribution.storyId = req.params.id;
   newContribution.userId = req.session.userid;
 
+  console.log(newContribution);
+
   contributionQueries.addContribution(newContribution)
     .then(() => res.redirect(`/story/${req.params.id}/contribute`));
 });

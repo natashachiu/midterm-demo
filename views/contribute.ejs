@@ -49,24 +49,22 @@
     <section>
       <h3>Contributions</h3>
       <div class="container">
-        <div class="row">
-          <form id="contributions-picker" action="/story/<%= story.id %>" method="post">
+        <form id="contributions-picker" action="/story/<%= story.id %>" method="post">
+          <div class="row row-cols-3 row-col-sm-1">
+
             <% for (const contribution of contributions) {%>
 
-              <div class="col-6">
-                <label>
-                  <input type="radio" name="contribution" selected checked class="card-input-element"
-                    value="<%= contribution.id %>">
-                  <div class="card card-input text-center">
-                    <div class="card-body">
-                      <%= contribution.contribution_content %>
-                    </div>
+              <div class="col">
+                <input type="radio" name="contribution" selected checked class="card-input-element"
+                  value="<%= contribution.id %>">
+                <div class="card card-input text-center">
+                  <div class="card-body">
+                    <%= contribution.contribution_content %>
                   </div>
-                </label>
+                </div>
               </div>
-
               <% } %>
-        </div>
+          </div>
       </div>
     </section>
 

@@ -77,3 +77,7 @@ app.get('/login/:id', (req, res) => {
   res.redirect('/');
 });
 
+app.get('/logout', (req, res) => {
+  req.session = null;
+  res.redirect('/');
+});
