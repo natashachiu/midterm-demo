@@ -46,6 +46,7 @@ const storyRoute = require('./routes/story');
 
 
 
+
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
@@ -55,6 +56,7 @@ const storyRoute = require('./routes/story');
 
 app.use('/home', homeRoute);
 app.use('/story',storyRoute);
+
 
 // Note: mount other resources here, using the same pattern above
 

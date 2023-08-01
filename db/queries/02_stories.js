@@ -14,10 +14,10 @@ const getIndividualStories = (storyId) => {
 };
 
 const createNewStories = (values)=>{
-  const query = 'INSERT INTO stories (title, description, content, completed, created_at, completed_at, is_fav) VALUES ($1, $2, $3, $4, $5, $6, $7) RETURNING *';
+  const query = 'INSERT INTO stories (user_id,title, description, content, completed, created_at, completed_at, is_fav) VALUES ($1, $2, $3, $4, $5, $6, $7,$8) RETURNING *';
 
   // Use the `db.query` method with the SQL query and values.
-  return db.query(query, [values.title, values.description, values.content, values.completed, values.created_at, values.completed_at, values.is_fav])
+  return db.query(query, [values.user_id,values.title, values.description, values.content, values.completed, values.created_at, values.completed_at, values.is_fav])
     .then(result => {
       // Return the result to the caller.
       return result.rows[0]; // Assuming we are returning the first row (the newly inserted story).
