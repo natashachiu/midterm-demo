@@ -43,7 +43,8 @@
     </section>
     <section>
       <h2>
-        <%= story.completed_at ? 'Completed' : 'Not Complete' %>
+        <%= console.log(story.completed); %>
+          <%= story.completed ? 'Completed' : 'Not Complete' %>
       </h2>
     </section>
     <section class="story-section-contributors">
@@ -53,10 +54,10 @@
       </div>
     </section>
     <% if (!story.completed_at){%>
-    <form action="/story/<%= story.story_id %>/contribute" method="get">
-      <button type="submit">Contribute</button>
-    </form>
-     <% } %>
+      <form action="/story/<%= story.story_id %>/contribute" method="get">
+        <button type="submit">Contribute</button>
+      </form>
+      <% } %>
 </body>
 
 </html>

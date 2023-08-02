@@ -13,6 +13,21 @@
     </p>
   </article>
 
+  <div>
+    <% if (userId===story.user_id) { %>
+      <form action="/story/<%= story.story_id %>/toggle" method="post">
+        <label class="toggle-btn">
+          <button type="submit" value="true" name="toggleButton" class="btn btn-success">Mark as
+            Complete</button>
+        </label>
+      </form>
+      <!-- <h3>
+        <%= story.completed ? 'Completed' : 'Not Complete' %>
+      </h3> -->
+      <% } %>
+  </div>
+
+
   <section>
     <h4>Story</h4>
     <div>
@@ -20,83 +35,72 @@
     </div>
   </section>
 
-  <% if (userId===story.user_id) { %>
-    <div>
-      <form action="/story/<%= story.story_id %>/toggle" method="post">
-      <label class="toggle-btn">
-        <button type="submit" value="true" name="toggleButton">Complete</button>
-      </label>
-    </form>
-      <h3>
-        <%= story.completed_at ? 'Completed' : 'Not Complete' %>
-      </h3>
-    </div>
-    <% } %>
 
 
-      <section>
-        <h3>Contributions</h3>
 
-        <div class="container">
-          <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-1">
+  <section>
+    <h3>Contributions</h3>
 
-            <% for (const contribution of contributions) {%>
-              <div class="col">
-                <div class="card card-input text-center">
-                  <div class="card-body pb-0">
-                    <%= contribution.contribution_content %>
-                  </div>
+    <div class="container">
+      <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-1">
 
-                  <div class="d-flex justify-content-end">
-                    <% if (userId===story.user_id) { %>
-                      <form action="/story/<%= story.story_id %>/append" method="post">
-                        <button type="submit" class="btn btn-default" name="contribution"
-                          value="<%= contribution.id %>">
-                          <ion-icon name="add-outline"></ion-icon>
+        <% for (const contribution of contributions) {%>
+          <div class="col">
+            <div class="card card-input text-center">
+              <div class="card-body pb-0">
+                <%= contribution.contribution_content %>
+              </div>
+
+              <div class="d-flex justify-content-end">
+                <% if (userId===story.user_id) { %>
+                  <form action="/story/<%= story.story_id %>/append" method="post">
+                    <button type="submit" class="btn btn-default" name="contribution" value="<%= contribution.id %>">
+                      <ion-icon name="add-outline"></ion-icon>
+                    </button>
+                  </form>
+                  <% } %>
+
+                    <% if (upvotedContributions.includes(contribution.id)) { %>
+                      <form action="/story/<%= story.story_id %>/upvote/remove" method="post">
+                        <button type="submit" class="btn btn-default" name="upvote" value="<%= contribution.id %>">
+                          <ion-icon name="heart" class="active"></ion-icon>
                         </button>
                       </form>
-                      <% } %>
+                      <% } else { %>
+                        <form action="/story/<%= story.story_id %>/upvote/add" method="post">
+                          <button type="submit" class="btn btn-default" name="upvote" value="<%= contribution.id %>">
+                            <ion-icon name="heart"></ion-icon>
+                          </button>
+                        </form>
+                        <% } %>
 
-                        <% if (upvotedContributions.includes(contribution.id)) { %>
-                          <form action="/story/<%= story.story_id %>/upvote/remove" method="post">
-                            <button type="submit" class="btn btn-default" name="upvote" value="<%= contribution.id %>">
-                              <ion-icon name="heart" class="active"></ion-icon>
-                            </button>
-                          </form>
-                          <% } else { %>
-                            <form action="/story/<%= story.story_id %>/upvote/add" method="post">
-                              <button type="submit" class="btn btn-default" name="upvote"
-                                value="<%= contribution.id %>">
-                                <ion-icon name="heart"></ion-icon>
-                              </button>
-                            </form>
-                            <% } %>
-
-                              <span>
-                                <%= contribution.up_vote %>
-                              </span>
-                  </div>
-                </div>
+                          <span>
+                            <%= contribution.up_vote %>
+                          </span>
               </div>
-              <% } %>
-
+            </div>
           </div>
-        </div>
-      </section>
+          <% } %>
+
+      </div>
+    </div>
+  </section>
 
 
-      <section>
-        <h4>Add your own contribution</h4>
-        <form action="/story/<%= story.story_id %>/contribute" method="post">
-          <div>
-            <textarea type="text" name="content"></textarea>
-            <button type="submit">Publish</button>
-          </div>
-        </form>
-      </section>
+  <section>
+    <h4>Add your own contribution</h4>
+    <form action="/story/<%= story.story_id %>/contribute" method="post">
+      <div>
+        <textarea type="text" name="content"></textarea>
+        <button type="submit" class="btn btn-primary">Publish</button>
+      </div>
+    </form>
+  </section>
+
+  <footer><a href="/story/<%= story.story_id %>">Back to story</a></footer>
 
 
-      <script>
+  <!-- <script>
         function handleToggle(storyId, user_id) {
           const toggleButton = document.getElementById('toggleButton');
           // Send an AJAX request to the server
@@ -118,7 +122,7 @@
             });
         }
 
-      </script>
-      </body>
+      </script> -->
+  </body>
 
-      </html>
+  </html>

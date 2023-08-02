@@ -17,6 +17,9 @@ const { formatDate } = require('../helpers');
 
 
 router.get('/', (req, res) => {
+  if (!req.session.userid) {
+    res.render('login-error');
+  }
   res.render('newStory');
 });
 router.post('/', async (req, res) => {
@@ -43,9 +46,10 @@ router.post('/', async (req, res) => {
       console.error("Error inserting story:", error.message);
       res.redirect('/error'); // Redirect to an error page in case of an error.
     }
-  } else {
-    res.send("Please Log in❌❌❌");
   }
+  // else {
+  //   res.render('"Please Log in❌❌❌"');
+  // }
 
 
 });
@@ -60,9 +64,9 @@ router.post('/:id/toggle', (req, res) => {
   console.log('user_Id : ' + user_id, 'storyId: ' + storyId);
   // Update the database with the new completed status
   storyQueries.toggleCompleted(storyId, user_id)
-    .then(result => {
+    .then(() => {
       //res.sendStatus(200); // Send a success response to the client
-      res.redirect(`/story/${req.params.id}`)
+      res.redirect(`/story/${req.params.id}`);
       console.log('user: ' + user_id, 'story: ' + storyId);
     })
     .catch(error => {
@@ -71,7 +75,6 @@ router.post('/:id/toggle', (req, res) => {
       // Send a server error response to the client
     });
 });
-
 router.get('/:id', (req, res) => {
   storyQueries.getIndividualStories(req.params.id)
     .then(story => {
@@ -84,16 +87,17 @@ router.get('/:id', (req, res) => {
 
 
 router.get('/:id/contribute', (req, res) => {
+  if (!req.session.userid) {
+    return res.render('login-error');
+  }
   let story = {};
   let contributions = {};
-  console.log(req.params.id);
+  const upvotedContributions = [];
 
   storyQueries.getIndividualStories(req.params.id)
     .then(data => {
       data.created_at = formatDate(data.created_at);
       story = data;
-    })
-    .then(() => {
       return contributionQueries.getContributionsForStory(req.params.id);
     })
     .then(data => {
@@ -101,12 +105,12 @@ router.get('/:id/contribute', (req, res) => {
       return upvotedContsQueries.getUpvotedContributions(req.session.userid);
     })
     .then(data => {
-      const upvotedContributions = [];
+      console.log(data);
       for (const upvotedCont of data) {
         upvotedContributions.push(upvotedCont.contribution_id);
       }
 
-      console.log(upvotedContributions);
+      console.log('upvotedContributions', upvotedContributions);
       const templateVars = {
         story,
         contributions,
@@ -125,7 +129,7 @@ router.post('/:id/contribute', (req, res) => {
   newContribution.storyId = req.params.id;
   newContribution.userId = req.session.userid;
 
-  console.log(newContribution);
+  console.log('newContribution', newContribution);
 
   contributionQueries.addContribution(newContribution)
     .then(() => res.redirect(`/story/${req.params.id}/contribute`));
@@ -148,27 +152,27 @@ router.post('/:id/append', (req, res) => {
   storyQueries.getIndividualStories(req.params.id)
     .then(data => {
       story = data;
+      contributionQueries.getIndividualContribution(contributionId);
     })
-    .then(() => contributionQueries.getIndividualContribution(contributionId))
     .then(data => {
       const content = story.content + " " + data.contribution_content;
       const storyId = req.params.id;
       storyQueries.appendToStory(storyId, content);
+      contributionQueries.removeContribution(contributionId);
     })
-    .then(() => contributionQueries.removeContribution(contributionId))
     .then(() => res.redirect(`/story/${req.params.id}/contribute`));
 });
 
+
 router.post('/:id/upvote/add', (req, res) => {
   const contributionId = parseInt(req.body.upvote);
+  const userId = parseInt(req.session.userid);
 
   contributionQueries.getIndividualContribution(contributionId)
     .then(data => {
       const upvotes = data.up_vote + 1;
       contributionQueries.addUpvote(upvotes, contributionId);
-    })
-    .then(() => {
-      upvotedContsQueries.addUpvotedContribution(req.session.userid, contributionId);
+      return upvotedContsQueries.addUpvotedContribution(userId, contributionId);
     })
     .then(() => res.redirect(`/story/${req.params.id}/contribute`));
 });
@@ -180,9 +184,7 @@ router.post('/:id/upvote/remove', (req, res) => {
     .then(data => {
       const upvotes = data.up_vote - 1;
       contributionQueries.removeUpvote(upvotes, contributionId);
-    })
-    .then(() => {
-      upvotedContsQueries.removeUpvotedContribution(req.session.userid, contributionId);
+      return upvotedContsQueries.removeUpvotedContribution(req.session.userid, contributionId);
     })
     .then(() => res.redirect(`/story/${req.params.id}/contribute`));
 });

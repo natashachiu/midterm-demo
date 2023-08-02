@@ -8,7 +8,7 @@ const getAllStories = () => {
 };
 
 const getAllStoriesByUserId = (userId) => {
-  return db.query('SELECT * FROM stories WHERE user_id = $1;', [userId])
+  return db.query('SELECT stories.id AS story_id, * FROM stories JOIN users ON user_id = users.id WHERE user_id = $1;', [userId])
     .then(data => {
       return data.rows;
     });
