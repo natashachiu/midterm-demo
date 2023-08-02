@@ -14,7 +14,7 @@
   <link rel="stylesheet" href="/vendor/border-box.css" />
   <link rel="stylesheet" href="/styles/main.css" />
   <link rel="stylesheet" href="/styles/layout.css" />
- 
+
 
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script defer src="/scripts/app.js"></script>
@@ -41,11 +41,11 @@
         <%= story.description %>
       </div>
     </section>
-     <section>
+    <section>
       <h2>
         <%= story.completed_at ? 'Completed' : 'Not Complete' %>
       </h2>
-     </section>
+    </section>
     <section class="story-section-contributors">
       <div class="story-section">
         <h4>Story</h4>
@@ -61,17 +61,18 @@
       </div>
     </section>
 
-    <form action="/story/<%= story.id %>/contribute" method="get">
+    <form action="/story/<%= story.story_id %>/contribute" method="get">
       <button type="submit">Contribute</button>
     </form>
     <div>
       <label class="toggle-btn">
-        <input type="checkbox" name="toggleButton" id="toggleButton"onchange="handleToggle(<%= storyId %>,<%= story.user_id %> )">
+        <input type="checkbox" name="toggleButton" id="toggleButton"
+          onchange="handleToggle(<%= storyId %>,<%= story.user_id %> )">
         Completed
-    </label>
+      </label>
     </div>
     <script>
-      function handleToggle(storyId,user_id) {
+      function handleToggle(storyId, user_id) {
         const toggleButton = document.getElementById('toggleButton');
         // Send an AJAX request to the server
         fetch("/story/<%= storyId %>/toggle", {
@@ -94,4 +95,5 @@
 
     </script>
 </body>
+
 </html>

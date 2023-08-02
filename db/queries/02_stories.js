@@ -7,7 +7,7 @@ const getAllStories = () => {
     });
 };
 const getIndividualStories = (storyId) => {
-  return db.query('SELECT * FROM stories JOIN users ON user_id = users.id WHERE stories.id = $1', [storyId])
+  return db.query('SELECT stories.id AS story_id, * FROM stories JOIN users ON user_id = users.id WHERE stories.id = $1', [storyId])
     .then(story => {
       return story.rows ? story.rows[0] : null;
     });
@@ -31,13 +31,13 @@ const appendToStory = (storyId, content) => {
       return story.rows ? story.rows[0] : null;
     });
 };
- const toggleCompleted = (storyId,user_id) => {
- return db.query('UPDATE stories SET completed_at = $1, completed = $2 WHERE id = $3 AND user_id = $4 RETURNING *', [new Date(),true, storyId, user_id])
-  .then(result => {
-       console.log('updated data');
-  })
+const toggleCompleted = (storyId, userId) => {
+  return db.query('UPDATE stories SET completed_at = $1, completed = $2 WHERE id = $3 AND user_id = $4 RETURNING *', [new Date(), true, storyId, userId])
+    .then(result => {
+      console.log('updated data');
+    });
 
- }
+};
 
 
 module.exports = { getAllStories, getIndividualStories, appendToStory, createNewStories, toggleCompleted };

@@ -2,9 +2,9 @@
   margin: 0 auto;
 }
 
-// label {
-//   width: 100%;
-// }
+label {
+  width: 100%;
+}
 
 .card-input-element {
   display: none;
@@ -22,4 +22,18 @@
 
 .card-input-element:checked+.card-input {
   box-shadow: 0 0 3px 3px blueviolet;
+}
+
+ion-icon.active {
+  animation: like 0.5s 1;
+  fill: red;
+  stroke: none;
+}
+
+ion-icon {
+  fill: transparent;
+  stroke: black;
+  stroke-width: 30;
+  transition: all 0.5s;
+  padding-top: 5px;
 }
