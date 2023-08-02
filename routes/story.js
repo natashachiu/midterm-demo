@@ -71,7 +71,23 @@ router.post('/:id/toggle', (req, res) => {
       // Send a server error response to the client
     });
 });
+router.get('/:id/favorite',(req,res)=>{
+  //
+})
+router.post('/:id/favorite',(req,res)=> {
+  const storyId = req.params.id;
+  const user_id = req.session.userid;
+  if(!user_id){
+    res.render('login-error')
+  }else{
+    storyQueries.addFavoriteStories(storyId,user_id)
+  .then(result=>{
+   res.send("is favorite story added");
+  })
+  }
+  
 
+})
 router.get('/:id', (req, res) => {
   storyQueries.getIndividualStories(req.params.id)
     .then(story => {

@@ -57,6 +57,11 @@
       <button type="submit">Contribute</button>
     </form>
      <% } %>
+     <section>
+      <form action="/story/<%= story.story_id %>/favorite" method="post">
+        <button type="submit">Add to my favorite</button>
+      </form>
+     </section>
 </body>
 
 </html>
