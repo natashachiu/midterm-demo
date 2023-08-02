@@ -51,20 +51,12 @@
         <h4>Story</h4>
         <%= story.content %>
       </div>
-      <div class="contributors">
-        <h6>
-          Contributions
-        </h6>
-        <p>
-          List of contributions
-        </p>
-      </div>
     </section>
-
+    <% if (!story.completed_at){%>
     <form action="/story/<%= story.story_id %>/contribute" method="get">
       <button type="submit">Contribute</button>
     </form>
-
+     <% } %>
 </body>
 
 </html>

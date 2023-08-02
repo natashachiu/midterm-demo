@@ -61,7 +61,8 @@ router.post('/:id/toggle', (req, res) => {
   // Update the database with the new completed status
   storyQueries.toggleCompleted(storyId, user_id)
     .then(result => {
-      res.sendStatus(200); // Send a success response to the client
+      //res.sendStatus(200); // Send a success response to the client
+      res.redirect(`/story/${req.params.id}`)
       console.log('user: ' + user_id, 'story: ' + storyId);
     })
     .catch(error => {

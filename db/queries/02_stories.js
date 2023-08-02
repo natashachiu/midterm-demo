@@ -1,7 +1,7 @@
 const db = require('../connection');
 
 const getAllStories = () => {
-  return db.query('SELECT * FROM stories;')
+  return db.query('SELECT stories.id AS story_id, * FROM stories JOIN users ON user_id = users.id')
     .then(data => {
       return data.rows;
     });
@@ -46,6 +46,5 @@ const toggleCompleted = (storyId, userId) => {
     });
 
 };
-
 
 module.exports = { getAllStories, getIndividualStories, appendToStory, createNewStories, toggleCompleted, getAllStoriesByUserId };

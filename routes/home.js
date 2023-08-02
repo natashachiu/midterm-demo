@@ -11,7 +11,7 @@ const router = express.Router();
 const storyQueries = require('../db/queries/02_stories');
 
 router.get('/', (req, res) => {
-
+  
   storyQueries.getAllStories()
     .then(stories => {
       const templateVars = { stories };

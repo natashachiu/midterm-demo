@@ -10,10 +10,17 @@
         <div class="card" style="box-sizing: 10em; border-color: rgba(59, 59, 59, 0.161);">
           <a href="/story/<%=story.id%>" style="color: black; text-decoration: none;"> <div class="card-body">
             <h2 class="card-title"><%=story.title%></h2>
-            <span class="card-subtitle"><span style="font-size: medium; opacity: 60%;">By <%=story.user_id%></span><span><%=story.complete%></span></span>
+            <span class="card-subtitle">
+              <span style="font-size: medium; opacity: 60%;">By <%=story.username%></span>
+          </span>
             <div class="card-subtitle">
             <%= story.description %>
             </div>
+            <% if(story.completed){%>
+            <span>
+              complete
+            </span>
+            <%}%>
             <div class="text"></div>
           </div>
         </div>

@@ -22,11 +22,11 @@
 
   <% if (userId===story.user_id) { %>
     <div>
+      <form action="/story/<%= story.story_id %>/toggle" method="post">
       <label class="toggle-btn">
-        <input type="checkbox" name="toggleButton" id="toggleButton"
-          onchange="handleToggle(<%= storyId %>,<%= story.user_id %> )">
-        Completed
+        <button type="submit" value="true" name="toggleButton">Complete</button>
       </label>
+    </form>
       <h3>
         <%= story.completed_at ? 'Completed' : 'Not Complete' %>
       </h3>
