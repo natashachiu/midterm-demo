@@ -8,6 +8,7 @@
 
 const express = require('express');
 const router = express.Router();
+
 const storyQueries = require('../db/queries/02_stories');
 const contributionQueries = require('../db/queries/03_contributions');
 const upvotedContsQueries = require('../db/queries/04_upvoted_contributions');
@@ -50,7 +51,6 @@ router.get('/:id', (req, res) => {
   storyQueries.getIndividualStories(req.params.id)
     .then(story => {
       story.created_at = formatDate(story.created_at);
-
       const templateVars = { story };
       res.render('story', templateVars);
     });
@@ -60,6 +60,7 @@ router.get('/:id', (req, res) => {
 router.get('/:id/contribute', (req, res) => {
   let story = {};
   let contributions = {};
+  console.log(req.params.id);
 
   storyQueries.getIndividualStories(req.params.id)
     .then(data => {
