@@ -14,6 +14,7 @@
   <link rel="stylesheet" href="/vendor/border-box.css" />
   <link rel="stylesheet" href="/styles/main.css" />
   <link rel="stylesheet" href="/styles/layout.css" />
+ 
 
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script defer src="/scripts/app.js"></script>
@@ -21,7 +22,6 @@
 
 <body>
   <%- include('partials/_header') %>
-
     <h1>
       <%= story.title %>
     </h1>
@@ -41,18 +41,57 @@
         <%= story.description %>
       </div>
     </section>
-
-    <section>
-      <h4>Story</h4>
-      <div>
+     <section>
+      <h2>
+        <%= story.completed_at ? 'Completed' : 'Not Complete' %>
+      </h2>
+     </section>
+    <section class="story-section-contributors">
+      <div class="story-section">
+        <h4>Story</h4>
         <%= story.content %>
+      </div>
+      <div class="contributors">
+        <h6>
+          Contributions
+        </h6>
+        <p>
+          List of contributions
+        </p>
       </div>
     </section>
 
     <form action="/story/<%= story.id %>/contribute" method="get">
       <button type="submit">Contribute</button>
     </form>
+    <div>
+      <label class="toggle-btn">
+        <input type="checkbox" name="toggleButton" id="toggleButton"onchange="handleToggle(<%= storyId %>,<%= story.user_id %> )">
+        Completed
+    </label>
+    </div>
+    <script>
+      function handleToggle(storyId,user_id) {
+        const toggleButton = document.getElementById('toggleButton');
+        // Send an AJAX request to the server
+        fetch("/story/<%= storyId %>/toggle", {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+        })
+          .then(response => {
+            if (response.ok) {
+              console.log('Story status updated.');
+            } else {
+              console.error('Failed to update story status.');
+            }
+          })
+          .catch(error => {
+            console.error('Error updating story status:', error);
+          });
+      }
 
+    </script>
 </body>
-
 </html>

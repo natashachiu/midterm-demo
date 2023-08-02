@@ -18,42 +18,54 @@ router.get('/', (req, res) => {
 });
 router.post('/', async (req, res) => {
   const user_id = req.session.userid;
-  const { title, description, content } = req.body;
+  if(user_id){
+    const { title, description, content } = req.body;
 
-  try {
-    const result = await storyQueries.createNewStories({
-      user_id,
-      title,
-      description,
-      content,
-      completed: false, // Or any default value for completed.
-      created_at: new Date(), // Or the actual creation date.
-      completed_at: null, // Or any default value for completed_at.
-      is_fav: false, // Or any default value for is_fav.
-
-    });
-
-    console.log("Successful insertion:", result);
-    res.redirect('/home'); // Redirect to a success page or any other page after successful insertion.
-  } catch (error) {
-    console.error("Error inserting story:", error.message);
-    res.redirect('/error'); // Redirect to an error page in case of an error.
+    try {
+      const result = await storyQueries.createNewStories({
+        user_id,
+        title,
+        description,
+        content,
+        completed: false, // Or any default value for completed.
+        created_at: new Date(), // Or the actual creation date.
+        completed_at: null, // Or any default value for completed_at.
+        is_fav: false, // Or any default value for is_fav.
+  
+      });
+  
+      console.log("Successful insertion:", result);
+      res.redirect('/home'); // Redirect to a success page or any other page after successful insertion.
+    } catch (error) {
+      console.error("Error inserting story:", error.message);
+      res.redirect('/error'); // Redirect to an error page in case of an error.
+    }
   }
+   else{
+    res.send("Please Log in❌❌❌")
+   }
+  
 
 });
 
-
-
-router.get('/:id', (req, res) => {
-  storyQueries.getIndividualStories(req.params.id)
-    .then(story => {
-      story.created_at = formatDate(story.created_at);
-
-      const templateVars = { story };
-      res.render('story', templateVars);
+router.get('/:id/toggle',(req,res)=>{
+  res.redirect(`/story/${req.params.id}`);
+})
+router.post('/:id/toggle', (req, res) => {
+  const storyId = req.params.id;
+  const user_id = req.session.userid;
+  console.log('user_Id : '+user_id,'storyId: '+storyId)
+  // Update the database with the new completed status
+ storyQueries.toggleCompleted(storyId,user_id)
+             .then(result => {
+              res.sendStatus(200); // Send a success response to the client
+              console.log('user: '+user_id, 'story: '+ storyId)
+             })
+    .catch(error => {
+      console.error('Error updating story status:', error);
+      res.sendStatus(500); // Send a server error response to the client
     });
 });
-
 
 router.get('/:id/contribute', (req, res) => {
   let story = {};
@@ -91,6 +103,15 @@ router.post('/:id/contribute', (req, res) => {
     .then(() => res.redirect(`/story/${req.params.id}/contribute`));
 });
 
+router.get('/:id', (req, res) => {
+  storyQueries.getIndividualStories(req.params.id)
+    .then(story => {
+      story.created_at = formatDate(story.created_at);
+
+      const templateVars = { story, storyId : req.params.id };
+      res.render('story', templateVars);
+    });
+});
 
 router.post('/:id', (req, res) => {
 
@@ -110,5 +131,6 @@ router.post('/:id', (req, res) => {
     .then(() => contributionQueries.removeContribution(contributionId))
     .then(() => res.redirect(`/story/${req.params.id}`));
 });
+
 
 module.exports = router;
