@@ -109,7 +109,9 @@ router.get('/:id/contribute', (req, res) => {
       const templateVars = {
         story,
         contributions,
-        upvotedContributions
+        upvotedContributions,
+        storyId: req.params.id,
+        userId: parseInt(req.session.userid)
       };
       res.render('contribute', templateVars);
     });

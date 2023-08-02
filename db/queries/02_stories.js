@@ -6,6 +6,14 @@ const getAllStories = () => {
       return data.rows;
     });
 };
+
+const getAllStoriesByUserId = (userId) => {
+  return db.query('SELECT * FROM stories WHERE user_id = $1;', [userId])
+    .then(data => {
+      return data.rows;
+    });
+};
+
 const getIndividualStories = (storyId) => {
   return db.query('SELECT stories.id AS story_id, * FROM stories JOIN users ON user_id = users.id WHERE stories.id = $1', [storyId])
     .then(story => {
@@ -40,4 +48,4 @@ const toggleCompleted = (storyId, userId) => {
 };
 
 
-module.exports = { getAllStories, getIndividualStories, appendToStory, createNewStories, toggleCompleted };
+module.exports = { getAllStories, getIndividualStories, appendToStory, createNewStories, toggleCompleted, getAllStoriesByUserId };

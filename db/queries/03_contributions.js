@@ -1,7 +1,7 @@
 const db = require('../connection');
 
 const getContributionsForStory = (storyId) => {
-  return db.query('SELECT * FROM contributions WHERE story_id = $1;', [storyId])
+  return db.query('SELECT * FROM contributions WHERE story_id = $1 ORDER BY created_at;', [storyId])
     .then(data => {
       return data.rows;
     });

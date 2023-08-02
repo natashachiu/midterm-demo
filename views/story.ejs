@@ -64,36 +64,7 @@
     <form action="/story/<%= story.story_id %>/contribute" method="get">
       <button type="submit">Contribute</button>
     </form>
-    <div>
-      <label class="toggle-btn">
-        <input type="checkbox" name="toggleButton" id="toggleButton"
-          onchange="handleToggle(<%= storyId %>,<%= story.user_id %> )">
-        Completed
-      </label>
-    </div>
-    <script>
-      function handleToggle(storyId, user_id) {
-        const toggleButton = document.getElementById('toggleButton');
-        // Send an AJAX request to the server
-        fetch("/story/<%= storyId %>/toggle", {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-        })
-          .then(response => {
-            if (response.ok) {
-              console.log('Story status updated.');
-            } else {
-              console.error('Failed to update story status.');
-            }
-          })
-          .catch(error => {
-            console.error('Error updating story status:', error);
-          });
-      }
 
-    </script>
 </body>
 
 </html>
