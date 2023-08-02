@@ -10,6 +10,8 @@ const express = require('express');
 const router = express.Router();
 const storyQueries = require('../db/queries/02_stories');
 const contributionQueries = require('../db/queries/03_contributions');
+const upvotedContsQueries = require('../db/queries/04_upvoted_contributions');
+
 const { formatDate } = require('../helpers');
 
 
@@ -57,6 +59,7 @@ router.get('/:id', (req, res) => {
 
 router.get('/:id/contribute', (req, res) => {
   let story = {};
+  let contributions = {};
 
   storyQueries.getIndividualStories(req.params.id)
     .then(data => {
@@ -67,12 +70,20 @@ router.get('/:id/contribute', (req, res) => {
       return contributionQueries.getContributionsForStory(req.params.id);
     })
     .then(data => {
-      return data;
+      contributions = data;
+      return upvotedContsQueries.getUpvotedContributions(req.session.userid);
     })
-    .then(contributions => {
+    .then(data => {
+      const upvotedContributions = [];
+      for (const upvotedCont of data) {
+        upvotedContributions.push(upvotedCont.contribution_id);
+      }
+
+      console.log(upvotedContributions);
       const templateVars = {
         story,
-        contributions
+        contributions,
+        upvotedContributions
       };
       res.render('contribute', templateVars);
     });
@@ -92,8 +103,7 @@ router.post('/:id/contribute', (req, res) => {
 });
 
 
-router.post('/:id', (req, res) => {
-
+router.post('/:id/append', (req, res) => {
   const contributionId = parseInt(req.body.contribution);
   let story = {};
 
@@ -108,7 +118,35 @@ router.post('/:id', (req, res) => {
       storyQueries.appendToStory(storyId, content);
     })
     .then(() => contributionQueries.removeContribution(contributionId))
-    .then(() => res.redirect(`/story/${req.params.id}`));
+    .then(() => res.redirect(`/story/${req.params.id}/contribute`));
+});
+
+router.post('/:id/upvote/add', (req, res) => {
+  const contributionId = parseInt(req.body.upvote);
+
+  contributionQueries.getIndividualContribution(contributionId)
+    .then(data => {
+      const upvotes = data.up_vote + 1;
+      contributionQueries.addUpvote(upvotes, contributionId);
+    })
+    .then(() => {
+      upvotedContsQueries.addUpvotedContribution(req.session.userid, contributionId);
+    })
+    .then(() => res.redirect(`/story/${req.params.id}/contribute`));
+});
+
+router.post('/:id/upvote/remove', (req, res) => {
+  const contributionId = parseInt(req.body.upvote);
+
+  contributionQueries.getIndividualContribution(contributionId)
+    .then(data => {
+      const upvotes = data.up_vote - 1;
+      contributionQueries.removeUpvote(upvotes, contributionId);
+    })
+    .then(() => {
+      upvotedContsQueries.removeUpvotedContribution(req.session.userid, contributionId);
+    })
+    .then(() => res.redirect(`/story/${req.params.id}/contribute`));
 });
 
 module.exports = router;
