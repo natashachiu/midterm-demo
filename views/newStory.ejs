@@ -1,25 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
 
-<head>
-  <title>CREATE A STORY</title>
-
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <link rel="stylesheet" href="/vendor/normalize-4.1.1.css" />
-  <link rel="stylesheet" href="/vendor/border-box.css" />
-  <link rel="stylesheet" href="/styles/main.css" />
-  <link rel="stylesheet" href="/styles/layout.css" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.1/js/bootstrap.min.js" integrity="sha512-3dZ9wIrMMij8rOH7X3kLfXAzwtcHpuYpEgQg1OA4QAob1e81H8ntUQmQm3pBudqIoySO5j0tHN4ENzA6+n2r4w==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-  <script src="/vendor/jquery-3.0.0.js"></script>
-  <script defer src="/scripts/app.js"></script>
-</head>
-
-<body>
   <%- include('partials/_header') %>
+
+  <div id="new_story" class="container mt-5">
+<form class="row g-3 bg-light">
+<div class="col-md-12">
+  <label for="title">Title</label>
+</div>
+</form>
+
+  </div>
+
+
+
+
+
+
   <div class="body-form">
     <form action="/story" method="post">
       <div class="form-group">
@@ -33,9 +28,11 @@
       <div class="form-group">
         <label for="content">Content</label>
         <textarea class="form-control-lg" id="content"  name = "content" rows="8"></textarea>
-      </div>
       <button type="submit" class="btn btn-primary">CREATE</button>
     </form>
-  </div>
+    </div>
+
+
+
 </body>
 </html>
