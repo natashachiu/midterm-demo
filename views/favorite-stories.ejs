@@ -1,37 +1,33 @@
 <%- include('partials/_header') %>
 
   <div id="story_div" class="container-fluid">
-    <div id="stories" class="row row-cols-1 row-cols-md-3 row-cols-lg-3 g-lg-5 g-sm-0">
+    <div id="fav_stories" class="row row-cols-1 row-cols-md-1 row-cols-lg-3 g-lg-5 g-sm-0">
+
       <% for (let story of stories) {%>
 
-        <div class="col">
-          <div class="card" style="box-sizing: 10em; border-color: rgba(59, 59, 59, 0.161);">
-            <a href="/story/<%=story.id%>/contribute" style="color: black; text-decoration: none;">
-              <div class="card-body">
-                <h2 class="card-title">
-                  <%=story.title%>
-                </h2>
-                <span class="card-subtitle d-flex justify-content-between mb-3 pe-2">
-                  <span style="font-size: medium; opacity: 60%;">By <%=story.username%>
-                  </span>
-                  <% if(story.completed){%>
-                    <span class="text-success fst-italic">
-                      Complete
-                    </span>
-                    <%}%>
+      <div class="col">
+        <div class="card justify-content-start" id="page_clouds" style=" border-color: rgba(59, 59, 59, 0.161);">
+          <a href="/story/<%=story.story_id%>" style="color: black; text-decoration: none;"> <div class="card-body">
+            <h2 class="card-title"><%=story.title%></h2>
+            <div class="card-subtitle d-flex justify-content-between mb-3">
+              <span style="font-size: medium; opacity: 60%;">By <%=story.username%></span>
+              <% if(story.completed){%>
+                <span class="text-success fst-italic">
+                  Complete
                 </span>
-                <div class="card-subtitle">
-                  <%= story.description %>
-                </div>
-                <div class="text"></div>
+                <%}%>
               </div>
+            <div class="card-subtitle mt-1">
+            "<%= story.description %>"
+            </div>
+            <div class="text"></div>
           </div>
-          </a>
         </div>
-        <%}%>
+      </a>
+      </div>
+<%}%>
     </div>
   </div>
-
 
   </body>
 

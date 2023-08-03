@@ -1,5 +1,66 @@
 <%- include('partials/_header') %>
 
+
+<section class="mt-5 p-5">
+  <div id="new_story" class="card container-lg">
+    <div class=" text-center">
+      <h3 class="card-title mt-3">Contributions</h3>
+    </div>
+    <div class="row justify-content-center my-5">
+
+
+      <div class="container p-5">
+        <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-1">
+
+          <% for (const contribution of contributions) {%>
+            <div class="col">
+              <div class="card card-input text-center p-2 m-3" style="border-radius: 5em ;">
+                <div class="card-body">
+                  <%= contribution.contribution_content %>
+                </div>
+
+                <div class="d-flex pl-3 pr-3" style="justify-content: space-between;">
+                  <form action="/story/<%= story.story_id %>/append" method="post">
+                    <button type="submit" class="btn btn-outline-success" style="border-radius: 5em;"
+                      name="contribution" value="<%= contribution.id %>">
+                      Add<ion-icon name="add-outline"></ion-icon>
+                    </button>
+                  </form>
+
+                  <% if (upvotedContributions.includes(contribution.id)) { %>
+                    <form action="/story/<%= story.story_id %>/upvote/remove" method="post">
+                      <button type="submit" class="btn btn-default" name="upvote" value="<%= contribution.id %>">
+                        <ion-icon name="heart" class="active"></ion-icon>
+                      </button>
+                      <span>
+                        <%= contribution.up_vote %>
+                      </span>
+                    </form>
+
+                    <% } else { %>
+                      <form action="/story/<%= story.story_id %>/upvote/add" method="post">
+                        <button type="submit" class="btn btn-default" name="upvote" value="<%= contribution.id %>">
+                          <ion-icon name="heart"></ion-icon>
+                        </button>
+                        <span>
+                          <%= contribution.up_vote %>
+                        </span>
+                      </form>
+                      <% } %>
+                </div>
+              </div>
+            </div>
+            <% } %>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+  </div>
+</section>
+
+
   <section class="mt-5">
     <div id="story_page" class="card container-lg">
 
@@ -12,28 +73,32 @@
       </div>
 
       <div class="row">
-        <div class="col-lg-6 text-center">
+        <div class="col-lg-12 text-center">
           <p class="card-subtitle mt-3">Author: <%= story.username %>
           </p>
-        </div>
-        <div class="col-lg-6 text-center">
           <p class="card-subtitle mt-3">Created on: <%= story.created_at %>
           </p>
-        </div>
+      </div>
       </div>
 
-      <div>
-        <% if (userId===story.user_id) { %>
-          <form action="/story/<%= story.story_id %>/toggle" method="post">
-            <label class="toggle-btn">
-              <button type="submit" value="true" name="toggleButton" class="btn btn-success">Mark as
-                Complete</button>
-            </label>
-          </form>
-          <!-- <h3>
-        <%= story.completed ? 'Completed' : 'Not Complete' %>
-      </h3> -->
-          <% } %>
+
+      <div class="row">
+        <div class="col-lg-9 text-center">
+        </div>
+        <div class="col-lg-3 text-center">
+          <h5 class="card-subtitle mt-4"> <% if (userId===story.user_id) { %>
+            <form action="/story/<%= story.story_id %>/toggle" method="post">
+              <label class="toggle-btn">
+                <button type="submit" value="true" name="toggleButton" class="btn btn-outline-success">Mark as
+                  Complete</button>
+              </label>
+            </form>
+            <!-- <h3>
+          <%= story.completed ? 'Completed' : 'Not Complete' %>
+        </h3> -->
+            <% } %> </h5>
+
+        </div>
       </div>
 
 
@@ -51,79 +116,6 @@
   </section>
 
 
-
-  <section class="mt-5 p-5">
-    <div id="new_story" class="card container-fluid">
-      <div class=" text-center">
-        <h3 class="card-title mt-3">Contributions</h3>
-      </div>
-      <div class="row justify-content-center my-5">
-
-
-
-
-
-
-
-
-
-
-
-        <div class="container p-5">
-          <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-1">
-
-            <% for (const contribution of contributions) {%>
-              <div class="col">
-                <div class="card card-input text-center p-2 m-3" style="border-radius: 5em ;">
-                  <div class="card-body">
-                    <%= contribution.contribution_content %>
-                  </div>
-
-                  <div class="d-flex pl-3 pr-3" style="justify-content: space-between;">
-                    <form action="/story/<%= story.story_id %>/append" method="post">
-                      <button type="submit" class="btn btn-outline-success" style="border-radius: 5em;"
-                        name="contribution" value="<%= contribution.id %>">
-                        Add<ion-icon name="add-outline"></ion-icon>
-                      </button>
-                    </form>
-
-                    <% if (upvotedContributions.includes(contribution.id)) { %>
-                      <form action="/story/<%= story.story_id %>/upvote/remove" method="post">
-                        <button type="submit" class="btn btn-default" name="upvote" value="<%= contribution.id %>">
-                          <ion-icon name="heart" class="active"></ion-icon>
-                        </button>
-                        <span>
-                          <%= contribution.up_vote %>
-                        </span>
-                      </form>
-
-                      <% } else { %>
-                        <form action="/story/<%= story.story_id %>/upvote/add" method="post">
-                          <button type="submit" class="btn btn-default" name="upvote" value="<%= contribution.id %>">
-                            <ion-icon name="heart"></ion-icon>
-                          </button>
-                          <span>
-                            <%= contribution.up_vote %>
-                          </span>
-                        </form>
-                        <% } %>
-                  </div>
-                </div>
-              </div>
-              <% } %>
-
-          </div>
-        </div>
-
-
-
-
-
-      </div>
-    </div>
-    </div>
-  </section>
-
   <section class="mt-5">
     <div id="new_story" class="card container-lg">
       <div class=" text-center">
@@ -139,6 +131,9 @@
             <div class="mb-4 mt-5 text-center">
               <button type="submit" class="btn btn-outline-primary col-lg-3"
                 style="border-radius: 5em;">Publish</button>
+              </div>
+              <div class="text-center">
+              <a href="/story/<%= story.story_id %>">Back to story</a>
             </div>
           </form>
         </div>
@@ -146,51 +141,7 @@
     </div>
   </section>
 
-  <footer><a href="/story/<%= story.story_id %>">Back to story</a></footer>
-
-
-
-
-
-  <!-- <script>
-      const icons = document.querySelectorAll('ion-icon');
-      if (icons) {
-        icons.forEach(icon => {
-          icon.onclick = function() {
-            console.log('click');
-            icon.classList.toggle('active');
-          };
-        });
-      }
-    </script> -->
-  </div>
   </body>
 
   </html>
 
-  <!-- <script>
-        function handleToggle(storyId, user_id) {
-          const toggleButton = document.getElementById('toggleButton');
-          // Send an AJAX request to the server
-          fetch("/story/<%= storyId %>/toggle", {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-          })
-            .then(response => {
-              if (response.ok) {
-                console.log('Story status updated.');
-              } else {
-                console.error('Failed to update story status.');
-              }
-            })
-            .catch(error => {
-              console.error('Error updating story status:', error);
-            });
-        }
-
-      </script> -->
-  </body>
-
-  </html>
