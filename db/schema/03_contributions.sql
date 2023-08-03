@@ -6,4 +6,4 @@ CREATE TABLE contributions(
   contribution_content TEXT NOT NULL,
   up_vote SMALLINT DEFAULT 0,
   created_at TIMESTAMP DEFAULT NOW()
-)
+);

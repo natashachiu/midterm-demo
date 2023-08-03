@@ -12,6 +12,7 @@ const router = express.Router();
 const storyQueries = require('../db/queries/02_stories');
 const contributionQueries = require('../db/queries/03_contributions');
 const upvotedContsQueries = require('../db/queries/04_upvoted_contributions');
+const favoriteQueries = require('../db/queries/05_favorite_stories');
 
 const { formatDate } = require('../helpers');
 
@@ -50,7 +51,21 @@ router.post('/', async (req, res) => {
 
 });
 
-
+router.get('/:id/favorite',(req,res)=>{
+  //
+})
+router.post('/:id/favorite',(req,res)=> {
+  const storyId = req.params.id;
+  const user_id = req.session.userid;
+  if(!user_id){
+    res.render('login-error')
+  }else{
+    favoriteQueries.addFavoriteStories(storyId,user_id)
+  .then(result=>{
+   res.render('favorite-stories-success');
+  })
+  }
+});
 router.get('/:id/toggle', (req, res) => {
   res.redirect(`/story/${req.params.id}`);
 });
@@ -71,23 +86,7 @@ router.post('/:id/toggle', (req, res) => {
       // Send a server error response to the client
     });
 });
-router.get('/:id/favorite',(req,res)=>{
-  //
-})
-router.post('/:id/favorite',(req,res)=> {
-  const storyId = req.params.id;
-  const user_id = req.session.userid;
-  if(!user_id){
-    res.render('login-error')
-  }else{
-    storyQueries.addFavoriteStories(storyId,user_id)
-  .then(result=>{
-   res.send("is favorite story added");
-  })
-  }
-  
 
-})
 router.get('/:id', (req, res) => {
   storyQueries.getIndividualStories(req.params.id)
     .then(story => {
@@ -97,7 +96,6 @@ router.get('/:id', (req, res) => {
       res.render('story', templateVars);
     });
 });
-
 
 router.get('/:id/contribute', (req, res) => {
   let story = {};

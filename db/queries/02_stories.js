@@ -46,16 +46,5 @@ const toggleCompleted = (storyId, userId) => {
     });
 
 };
-const addFavoriteStories = (storyId,user_Id) => {
-    return db.query('UPDATE stories SET is_Fav = $1 WHERE id = $2 AND user_id = $3 RETURNING *',[true,storyId,user_Id])
-    .then(result => {
-      console.log("is_Fav updated");
-    })
-}
-const getFavoriteStories = (userId) => {
-  return db.query('SELECT * FROM stories WHERE user_id = $1 AND is_Fav = $2', [userId,true])
-  .then(data => {
-    return data.rows;
-  });
-}
-module.exports = { getAllStories, getIndividualStories, appendToStory, createNewStories, toggleCompleted, getAllStoriesByUserId, addFavoriteStories, getFavoriteStories };
+
+module.exports = { getAllStories, getIndividualStories, appendToStory, createNewStories, toggleCompleted, getAllStoriesByUserId};

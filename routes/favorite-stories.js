@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const storyQueries = require('../db/queries/02_stories');
+const storyQueries = require('../db/queries/05_favorite_stories');
 
 router.get('/', (req, res) => {
   const userId = req.session.userid;
@@ -21,6 +21,7 @@ router.get('/', (req, res) => {
   }
 
 });
+
 
 
 
