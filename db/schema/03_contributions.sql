@@ -5,5 +5,6 @@ CREATE TABLE contributions(
   user_id INTEGER REFERENCES users(id) ON DELETE CASCADE,
   contribution_content TEXT NOT NULL,
   up_vote SMALLINT DEFAULT 0,
-  created_at TIMESTAMP DEFAULT NOW()
+  created_at TIMESTAMP DEFAULT NOW(),
+  added_to_story BOOLEAN DEFAULT false
 )

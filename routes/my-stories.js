@@ -14,19 +14,29 @@ const storyQueries = require('../db/queries/02_stories');
 router.get('/', (req, res) => {
   const userId = req.session.userid;
   if (!userId) {
-    res.render('login-error');
-  } else {
-    storyQueries.getAllStoriesByUserId(userId)
-      .then(stories => {
-        const templateVars = { stories };
-        return res.render('my-stories', templateVars);
-      })
-      .catch(err => {
-        res
-          .status(500)
-          .json({ error: err.message });
-      });
+    if (!req.session.userid) {
+      const templateVars = {
+        userId: null,
+        username: null
+      };
+      return res.render('login-error', templateVars);
+    }
   }
+  storyQueries.getAllStoriesByUserId(userId)
+    .then(stories => {
+      const templateVars = {
+        stories,
+        userId: parseInt(req.session.userid),
+        username: stories[0].username
+      };
+      return res.render('my-stories', templateVars);
+    })
+    .catch(err => {
+      res
+        .status(500)
+        .json({ error: err.message });
+    });
+
 
 });
 

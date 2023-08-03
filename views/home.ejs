@@ -13,14 +13,16 @@
                 <h2 class="card-title">
                   <%=story.title%>
                 </h2>
-                <span class="card-subtitle d-flex justify-content-between" style="margin-right: 1em;">
-                  <span style="font-size: medium; opacity: 60%;">By <%=story.username%></span>
+                <div class="card-subtitle d-flex justify-content-between mb-3 pe-2">
+                  <span style="font-size: medium; opacity: 60%;">
+                    By <%=story.username%>
+                  </span>
                   <% if(story.completed){%>
                     <span class="text-success fst-italic">
-                      complete
+                      Complete
                     </span>
                     <%}%>
-                </span>
+                </div>
                 <div class="card-subtitle">
                   <%= story.description %>
                 </div>
