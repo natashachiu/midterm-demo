@@ -52,4 +52,10 @@ const addFavoriteStories = (storyId,user_Id) => {
       console.log("is_Fav updated");
     })
 }
-module.exports = { getAllStories, getIndividualStories, appendToStory, createNewStories, toggleCompleted, getAllStoriesByUserId, addFavoriteStories };
+const getFavoriteStories = (userId) => {
+  return db.query('SELECT * FROM stories WHERE user_id = $1 AND is_Fav = $2', [userId,true])
+  .then(data => {
+    return data.rows;
+  });
+}
+module.exports = { getAllStories, getIndividualStories, appendToStory, createNewStories, toggleCompleted, getAllStoriesByUserId, addFavoriteStories, getFavoriteStories };
