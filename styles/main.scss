@@ -27,6 +27,34 @@ align-self: center;
   margin-top: .25em;
 }
 
+@media screen and (min-width: 992px){
+#new_story{
+  border-radius: 20em;
+}
+}
+@media screen and (max-width: 992px){
+#new_story{
+  border-radius: 7em;
+}
+}
+
+@media screen and (min-width: 992px){
+#story_page{
+  border-radius: 8em;
+}
+}
+@media screen and (max-width: 992px){
+#story_page{
+  border-radius: 7em;
+}
+}
+
+@media screen and (min-width: 768px){
+  #home_page_clouds{
+    border-radius: 2em;
+    height: 12em;
+  }
+  }
 }
 .body-form{
   display:flex;
@@ -62,7 +90,7 @@ button{
   display: flex;
   flex-direction: row;
   margin: 20px;
-  
+
 
   .story-section{
     width:60%;
@@ -72,7 +100,7 @@ button{
     padding:1rem;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
     font-weight: 300;
-    
+
   }
   .contributors{
     width:40%;

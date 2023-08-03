@@ -1,38 +1,35 @@
+<%- include('partials/_header') %>
 
-  <%- include('partials/_header') %>
-
-  <div id="new_story" class="container mt-5">
-<form class="row g-3 bg-light">
-<div class="col-md-12">
-  <label for="title">Title</label>
-</div>
-</form>
-
-  </div>
-
-
-
-
-
-
-  <div class="body-form">
-    <form action="/story" method="post">
-      <div class="form-group">
-        <label for="title">Title</label>
-        <textarea class="form-control" id="title" name ="title" rows="2"></textarea>
+  <section class="mt-5">
+    <div id="new_story" class="card container-lg">
+      <div class=" text-center">
+        <h3 class="card-title mt-3">Create A Story</h3>
+        <p class="card-subtitle">"your story is only a few short clicks and typos away"</p>
       </div>
-      <div class="form-group">
-        <label for="description">Description</label>
-        <textarea class="form-control" id="description"  name ="description" rows="2"></textarea>
+      <div class="row justify-content-center my-5">
+        <div class="col-lg-6">
+          <form action="/story" method="post">
+
+            <label for="title" class="form-label mt-3">Title:</label>
+            <input name="title" type="title" class="form-control" id="title" placeholder="What should we call your story?" required>
+
+            <label for="Description" class="form-label mt-3">Description:</label>
+            <input type="text" class="form-control" id="description" name="description"
+              placeholder="In a few words what will your story be about?" rows="2" required>
+
+            <label for="Content" class="form-label mt-3">Content:</label>
+            <textarea name="content" type="text" class="form-control" id="content"
+              placeholder="Let's get started, shall we?" style="height: 140px; resize: none;" required></textarea>
+
+            <div class="mb-4 mt-5 text-center">
+              <button type="submit" class="btn btn-outline-primary col-lg-3" style="border-radius: 5em;">Create</button>
+            </div>
+          </form>
+        </div>
       </div>
-      <div class="form-group">
-        <label for="content">Content</label>
-        <textarea class="form-control-lg" id="content"  name = "content" rows="8"></textarea>
-      <button type="submit" class="btn btn-primary">CREATE</button>
-    </form>
     </div>
+  </section>
 
+  </body>
 
-
-</body>
-</html>
+  </html>

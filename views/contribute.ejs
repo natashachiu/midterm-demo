@@ -1,23 +1,32 @@
 <%- include('partials/_header') %>
 
-  <h1>
-    <%= story.title %>
-  </h1>
+<section class="mt-5">
+  <div id="story_page" class="card container-lg">
 
-  <article>
-    <p>
-      <%= story.username %>
-    </p>
-    <p>
-      <%= story.created_at %>
-    </p>
-  </article>
-
-  <section>
-    <h4>Story</h4>
-    <div>
-      <%= story.content %>
+  <div class="row">
+    <div class="col text-center">
+      <h2 class="card-title mt-3" style="text-decoration: underline;"> <%= story.title %></h2>
     </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-6 text-center">
+      <p class="card-subtitle mt-3">Author: <%= story.username %></p>
+    </div>
+    <div class="col-lg-6 text-center">
+      <p class="card-subtitle mt-3">Created on: <%= story.created_at %></p>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col text-center">
+      <h3 class="card-title mt-3">Story</h3>
+      <div class="card-body story-section">
+       <p><%= story.content %></p>
+      </div>
+    </div>
+  </div>
+  </div>
   </section>
 
   <% if (userId===story.user_id) { %>
@@ -33,48 +42,55 @@
     </div>
     <% } %>
 
+  <section class="mt-5 p-5">
+    <div id="new_story" class="card container-fluid">
+      <div class=" text-center">
+        <h3 class="card-title mt-3">Contributions</h3>
+      </div>
+      <div class="row justify-content-center my-5">
 
-      <section>
-        <h3>Contributions</h3>
 
-        <div class="container">
+
+
+
+
+        <div class="container p-5">
           <div class="row row-cols-lg-3 row-cols-md-3 row-cols-sm-1">
 
             <% for (const contribution of contributions) {%>
               <div class="col">
-                <div class="card card-input text-center">
-                  <div class="card-body pb-0">
+                <div class="card card-input text-center p-2 m-3" style="border-radius: 5em ;">
+                  <div class="card-body">
                     <%= contribution.contribution_content %>
                   </div>
 
-                  <div class="d-flex justify-content-end">
-                    <% if (userId===story.user_id) { %>
-                      <form action="/story/<%= story.story_id %>/append" method="post">
-                        <button type="submit" class="btn btn-default" name="contribution"
-                          value="<%= contribution.id %>">
-                          <ion-icon name="add-outline"></ion-icon>
+                  <div class="d-flex pl-3 pr-3" style="justify-content: space-between;">
+                    <form action="/story/<%= story.story_id %>/append" method="post">
+                      <button type="submit" class="btn btn-outline-success" style="border-radius: 5em;" name="contribution" value="<%= contribution.id %>">
+                       Add<ion-icon name="add-outline"></ion-icon>
+                      </button>
+                    </form>
+
+                    <% if (upvotedContributions.includes(contribution.id)) { %>
+                      <form action="/story/<%= story.story_id %>/upvote/remove" method="post">
+                        <button type="submit" class="btn btn-default" name="upvote" value="<%= contribution.id %>">
+                          <ion-icon name="heart" class="active"></ion-icon>
                         </button>
+                        <span>
+                          <%= contribution.up_vote %>
+                        </span>
                       </form>
-                      <% } %>
 
-                        <% if (upvotedContributions.includes(contribution.id)) { %>
-                          <form action="/story/<%= story.story_id %>/upvote/remove" method="post">
-                            <button type="submit" class="btn btn-default" name="upvote" value="<%= contribution.id %>">
-                              <ion-icon name="heart" class="active"></ion-icon>
-                            </button>
-                          </form>
-                          <% } else { %>
-                            <form action="/story/<%= story.story_id %>/upvote/add" method="post">
-                              <button type="submit" class="btn btn-default" name="upvote"
-                                value="<%= contribution.id %>">
-                                <ion-icon name="heart"></ion-icon>
-                              </button>
-                            </form>
-                            <% } %>
-
-                              <span>
-                                <%= contribution.up_vote %>
-                              </span>
+                      <% } else { %>
+                        <form action="/story/<%= story.story_id %>/upvote/add" method="post">
+                          <button type="submit" class="btn btn-default" name="upvote" value="<%= contribution.id %>">
+                            <ion-icon name="heart"></ion-icon>
+                          </button>
+                          <span>
+                            <%= contribution.up_vote %>
+                          </span>
+                        </form>
+                        <% } %>
                   </div>
                 </div>
               </div>
@@ -82,43 +98,53 @@
 
           </div>
         </div>
-      </section>
 
 
-      <section>
-        <h4>Add your own contribution</h4>
-        <form action="/story/<%= story.story_id %>/contribute" method="post">
-          <div>
-            <textarea type="text" name="content"></textarea>
-            <button type="submit">Publish</button>
-          </div>
-        </form>
-      </section>
 
 
-      <script>
-        function handleToggle(storyId, user_id) {
-          const toggleButton = document.getElementById('toggleButton');
-          // Send an AJAX request to the server
-          fetch("/story/<%= storyId %>/toggle", {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
-          })
-            .then(response => {
-              if (response.ok) {
-                console.log('Story status updated.');
-              } else {
-                console.error('Failed to update story status.');
-              }
-            })
-            .catch(error => {
-              console.error('Error updating story status:', error);
-            });
-        }
 
-      </script>
-      </body>
+        </div>
+      </div>
+    </div>
+  </section>
 
-      </html>
+  <section class="mt-5">
+    <div id="new_story" class="card container-lg">
+      <div class=" text-center">
+        <h3 class="card-title mt-3">Add your own contribution</h3>
+      </div>
+      <div class="row justify-content-center my-5">
+        <div class="col-lg-6">
+          <form action="/story/<%= story.story_id %>/contribute" method="post">
+
+            <textarea name="content" type="text" class="form-control" id="content"
+              placeholder="So what did you want to add?" style="height: 140px; resize: none;" required></textarea>
+
+            <div class="mb-4 mt-5 text-center">
+              <button type="submit" class="btn btn-outline-primary col-lg-3" style="border-radius: 5em;">Publish</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+
+
+
+  <!-- <script>
+      const icons = document.querySelectorAll('ion-icon');
+      if (icons) {
+        icons.forEach(icon => {
+          icon.onclick = function() {
+            console.log('click');
+            icon.classList.toggle('active');
+          };
+        });
+      }
+    </script> -->
+  </div>
+  </body>
+
+  </html>
