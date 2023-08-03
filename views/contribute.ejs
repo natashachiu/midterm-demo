@@ -1,46 +1,56 @@
 <%- include('partials/_header') %>
 
-<section class="mt-5">
-  <div id="story_page" class="card container-lg">
+  <section class="mt-5">
+    <div id="story_page" class="card container-lg">
 
-  <div class="row">
-    <div class="col text-center">
-      <h2 class="card-title mt-3" style="text-decoration: underline;"> <%= story.title %></h2>
-    </div>
-  </div>
+      <div class="row">
+        <div class="col text-center">
+          <h2 class="card-title mt-3" style="text-decoration: underline;">
+            <%= story.title %>
+          </h2>
+        </div>
+      </div>
 
-  <div class="row">
-    <div class="col-lg-6 text-center">
-      <p class="card-subtitle mt-3">Author: <%= story.username %></p>
-    </div>
-    <div class="col-lg-6 text-center">
-      <p class="card-subtitle mt-3">Created on: <%= story.created_at %></p>
-    </div>
-  </div>
+      <div class="row">
+        <div class="col-lg-6 text-center">
+          <p class="card-subtitle mt-3">Author: <%= story.username %>
+          </p>
+        </div>
+        <div class="col-lg-6 text-center">
+          <p class="card-subtitle mt-3">Created on: <%= story.created_at %>
+          </p>
+        </div>
+      </div>
 
-  <div class="row">
-    <div class="col text-center">
-      <h3 class="card-title mt-3">Story</h3>
-      <div class="card-body story-section">
-       <p><%= story.content %></p>
+      <div>
+        <% if (userId===story.user_id) { %>
+          <form action="/story/<%= story.story_id %>/toggle" method="post">
+            <label class="toggle-btn">
+              <button type="submit" value="true" name="toggleButton" class="btn btn-success">Mark as
+                Complete</button>
+            </label>
+          </form>
+          <!-- <h3>
+        <%= story.completed ? 'Completed' : 'Not Complete' %>
+      </h3> -->
+          <% } %>
+      </div>
+
+
+      <div class="row">
+        <div class="col text-center">
+          <h3 class="card-title mt-3">Story</h3>
+          <div class="card-body story-section">
+            <p>
+              <%= story.content %>
+            </p>
+          </div>
+        </div>
       </div>
     </div>
-  </div>
-  </div>
   </section>
 
-  <% if (userId===story.user_id) { %>
-    <div>
-      <form action="/story/<%= story.story_id %>/toggle" method="post">
-      <label class="toggle-btn">
-        <button type="submit" value="true" name="toggleButton">Complete</button>
-      </label>
-    </form>
-      <h3>
-        <%= story.completed_at ? 'Completed' : 'Not Complete' %>
-      </h3>
-    </div>
-    <% } %>
+
 
   <section class="mt-5 p-5">
     <div id="new_story" class="card container-fluid">
@@ -48,6 +58,11 @@
         <h3 class="card-title mt-3">Contributions</h3>
       </div>
       <div class="row justify-content-center my-5">
+
+
+
+
+
 
 
 
@@ -66,8 +81,9 @@
 
                   <div class="d-flex pl-3 pr-3" style="justify-content: space-between;">
                     <form action="/story/<%= story.story_id %>/append" method="post">
-                      <button type="submit" class="btn btn-outline-success" style="border-radius: 5em;" name="contribution" value="<%= contribution.id %>">
-                       Add<ion-icon name="add-outline"></ion-icon>
+                      <button type="submit" class="btn btn-outline-success" style="border-radius: 5em;"
+                        name="contribution" value="<%= contribution.id %>">
+                        Add<ion-icon name="add-outline"></ion-icon>
                       </button>
                     </form>
 
@@ -103,8 +119,8 @@
 
 
 
-        </div>
       </div>
+    </div>
     </div>
   </section>
 
@@ -121,13 +137,16 @@
               placeholder="So what did you want to add?" style="height: 140px; resize: none;" required></textarea>
 
             <div class="mb-4 mt-5 text-center">
-              <button type="submit" class="btn btn-outline-primary col-lg-3" style="border-radius: 5em;">Publish</button>
+              <button type="submit" class="btn btn-outline-primary col-lg-3"
+                style="border-radius: 5em;">Publish</button>
             </div>
           </form>
         </div>
       </div>
     </div>
   </section>
+
+  <footer><a href="/story/<%= story.story_id %>">Back to story</a></footer>
 
 
 
@@ -145,6 +164,33 @@
       }
     </script> -->
   </div>
+  </body>
+
+  </html>
+
+  <!-- <script>
+        function handleToggle(storyId, user_id) {
+          const toggleButton = document.getElementById('toggleButton');
+          // Send an AJAX request to the server
+          fetch("/story/<%= storyId %>/toggle", {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+          })
+            .then(response => {
+              if (response.ok) {
+                console.log('Story status updated.');
+              } else {
+                console.error('Failed to update story status.');
+              }
+            })
+            .catch(error => {
+              console.error('Error updating story status:', error);
+            });
+        }
+
+      </script> -->
   </body>
 
   </html>

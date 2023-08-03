@@ -7,14 +7,34 @@
 
 const express = require('express');
 const router = express.Router();
-// const userQueries = require('../db/queries/01_users');
 const storyQueries = require('../db/queries/02_stories');
+const userQueries = require('../db/queries/01_users');
 
 router.get('/', (req, res) => {
-  
+  const userId = req.session.userid;
+  let stories = {};
+  let templateVars = {};
+
   storyQueries.getAllStories()
-    .then(stories => {
-      const templateVars = { stories };
+    .then(data => {
+      stories = data;
+      return userQueries.getUserById(userId);
+    })
+    .then(data => {
+      if (!userId) {
+        templateVars = {
+          stories,
+          userId: null,
+          username: null
+        };
+      } else {
+        templateVars = {
+          stories,
+          userId: parseInt(userId),
+          username: data.username
+        };
+      }
+
       return res.render('home', templateVars);
     })
     .catch(err => {

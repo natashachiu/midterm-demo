@@ -54,15 +54,21 @@
           </li>
         </ul>
 
-        <form class="d-flex justify-content-center" role="Login" style="padding-left:.5em;" method="get" action="/login/1">
-          <button class="btn btn-outline-success" type="submit">Login</button>
-        </form>
-        <form class="d-flex justify-content-center" role="Register" style="padding-left:.5em;">
-          <button class="btn btn-outline-primary" type="submit">Register</button>
-        </form>
-        <form class="d-flex justify-content-center" role="Logout" style="padding-left:.5em;" method="get" action="/logout">
-          <button class="btn btn-outline-danger" type="submit">Logout</button>
-        </form>
+        <% if (!userId) { %>
+          <form class="d-flex justify-content-center" role="Login" style="padding-left:.5em;" method="get"
+            action="/login/1">
+            <button class="btn btn-outline-success" type="submit">Login</button>
+          </form>
+          <form class="d-flex justify-content-center" role="Register" style="padding-left:.5em;">
+            <button class="btn btn-outline-primary" type="submit">Register</button>
+          </form>
+          <% } else { %>
+            <div>Hello, <%= username %>!</div>
+            <form class="d-flex justify-content-center" role="Logout" style="padding-left:.5em;" method="get"
+              action="/logout">
+              <button class="btn btn-outline-danger" type="submit">Logout</button>
+            </form>
+            <% } %>
       </div>
     </div>
   </nav>
