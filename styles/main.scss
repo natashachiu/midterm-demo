@@ -38,6 +38,17 @@ align-self: center;
 }
 }
 
+@media screen and (min-width: 992px){
+#story_page{
+  border-radius: 8em;
+}
+}
+@media screen and (max-width: 992px){
+#story_page{
+  border-radius: 7em;
+}
+}
+
 }
 .body-form{
   display:flex;

@@ -1,85 +1,95 @@
 
   <%- include('partials/_header') %>
 
+  <section class="mt-5">
+<div id="story_page" class="card container-lg">
 
+<div class="row">
+  <div class="col text-center">
+    <h2 class="card-title mt-3" style="text-decoration: underline;"> <%= story.title %></h2>
+  </div>
+</div>
 
+<div class="row">
+  <div class="col-lg-6 text-center">
+    <p class="card-subtitle mt-3">Author: <%= story.username %></p>
+  </div>
+  <div class="col-lg-6 text-center">
+    <p class="card-subtitle mt-3">Created on: <%= story.created_at %></p>
+  </div>
+</div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-  
-
-  <h1>
-      <%= story.title %>
-    </h1>
-
-    <article>
-      <p>
-        <%= story.username %>
-      </p>
-      <p>
-        <%= story.created_at %>
-      </p>
-    </article>
-
-    <section>
-      <h4>Description</h4>
-      <div>
-        <%= story.description %>
-      </div>
-    </section>
-    <section>
-      <h2>
-        <%= story.completed_at ? 'Completed' : 'Not Complete' %>
-      </h2>
-    </section>
-    <section class="story-section-contributors">
-      <div class="story-section">
-        <h4>Story</h4>
-        <%= story.content %>
-      </div>
-      <div class="contributors">
-        <h6>
-          Contributions
-        </h6>
-        <p>
-          List of contributions
-        </p>
-      </div>
-    </section>
-
-    <form action="/story/<%= story.story_id %>/contribute" method="get">
-      <button type="submit">Contribute</button>
-    </form>
-    <div>
-      <label class="toggle-btn">
-        <input type="checkbox" name="toggleButton" id="toggleButton"
-          onchange="handleToggle(<%= storyId %>,<%= story.user_id %> )">
-        Completed
-      </label>
+<div class="row">
+  <div class="col text-center">
+    <h4 class="card-title mt-3">Description</h4>
+    <div class="card-body">
+      <%= story.description %>
     </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col-lg-9 text-center">
+  </div>
+  <div class="col-lg-3 text-center">
+    <h5 class="card-subtitle mt-3">* <%= story.completed_at ? 'Completed' : 'Not Complete' %> *</h5>
+    <div>
+        <button class="btn btn-outline-success mt-2" style="border-radius: 5em;" type="checkbox" name="toggleButton" id="toggleButton"
+          onclick="handleToggle(<%= storyId %>,<%= story.user_id %> )" >Complete</button>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="col text-center">
+    <h4 class="card-title mt-3">Story</h4>
+    <div class="card-body story-section">
+     <p><%= story.content %></p>
+     Draught aye barque execution dock spanker quarterdeck mizzenmast lugsail pink plunder holystone Brethren of the Coast lookout jib scallywag pressgang rum fore crack Jennys tea cup case shot belaying pin lateen sail American Main Buccaneer port splice the main brace main sheet grapple cable lee. Bilge water hornswaggle keel stern list bowsprit jib topgallant cog fore reef sails skysail splice the main brace bucko wherry dance the hempen jig brig Barbary Coast ho furl red ensign parley trysail bilge coxswain bounty sheet hulk heave to chandler. Avast wherry jib cutlass cog me boom trysail sloop careen Yellow Jack parrel Gold Road reef Corsair bowsprit Nelsons folly run a rig gangplank clap of thunder parley long clothes provost scuttle take a caulk hail-shot bilged on her anchor dead men tell no tales clipper Pirate Round. Spirits lanyard loaded to the gunwalls ahoy nipper line swing the lead gally Pieces of Eight aft grapple jolly boat hogshead hempen halter bucko long boat weigh anchor fire ship rope's end dance the hempen jig brig topsail quarter barkadeer ye handsomely lass measured fer yer chains pink reef. Bilge water grog blossom bring a spring upon her cable booty transom cog Buccaneer Shiver me timbers hardtack barkadeer capstan lateen sail interloper loot Admiral of the Black doubloon Corsair league long clothes topgallant six pounders chase guns rutters mizzenmast cutlass aft bounty wench Letter of Marque Pieces of Eight. Crimp fire in the hole spike league pillage swab American Main dead men tell no tales chantey draught gibbet splice the main brace fore hempen halter run a shot across the bow cog interloper galleon fire ship barkadeer blow the man down coffer long boat maroon weigh anchor keelhaul Sink me lateen sail case shot lad. Sail ho ahoy run a shot across the bow hogshead chantey tack rum landlubber or just lubber parrel haul wind long boat six pounders heave to jib quarterdeck hearties hail-shot bowsprit walk the plank long clothes mizzenmast loot lanyard yo-ho-ho bilge rat grog Letter of Marque man-of-war chandler starboard. Ye boatswain Gold Road lad heave down swab lee nipperkin bowsprit fire ship hearties black jack Privateer loot trysail capstan matey chandler avast gangway topgallant gaff aye wench barque interloper warp rope's end lateen sail gunwalls. To go on account heave to measured fer yer chains dance the hempen jig Pieces of Eight bilge rat scuttle interloper yawl clipper marooned draft snow boatswain matey piracy pressgang bucko American Main draught Blimey squiffy belaying pin carouser reef run a rig fathom salmagundi tender lee. Me belay crow's nest spike scuttle splice the main brace gangway driver hearties deadlights boom chase topgallant jolly boat measured fer yer chains Buccaneer hands keel reef carouser Letter of Marque Pirate Round to go on account Nelsons ...
+    </div>
+  </div>
+</div>
+
+</div>
+</section>
+
+<section class="mt-3 contributors">
+  <div id="story_page" class="card container-lg">
+
+    <div class="row">
+      <div class="col text-center">
+        <h2 class="card-title mt-3" style="text-decoration: underline;"> Contributions </h2>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col text-center">
+        <h4 class="card-title mt-3">List Of Contributions</h4>
+        <p class="card-subtitle mt-1 opacity-50"> "A big thank you to everyone who contributed to this story's creation"</p>
+      </div>
+      <div style="align-items: center;">
+      <ul>
+        <li class="mt-2">Ye boatswain Gold Road lad heave down swab lee nipperkin bowsprit fire ship hearties black jack Privateer loot trysail capstan matey chandler avast gangway topgallant gaff aye wench barque interloper warp rope's end lateen sail gunwalls. <span class="opacity-50">-Shaj</span> </li>
+        <li class="mt-2"> hardtack barkadeer capstan lateen sail interloper loot Admiral of the Black doubloon <span class="opacity-50">-Nat</span></li>
+        <li class="mt-2"> landlubber or just lubber parrel haul wind long boat six pounders heave to jib quarterdeck hearties hail-shot bowsprit walk the plank long clothes mizzenmast loot lanyard yo-ho-ho bilge rat grog Letter of Marque man-of-war chandler starboard. <span class="opacity-50">-Olu</span></li>
+      </ul>
+    </div>
+    </div>
+
+    <div class="row">
+      <div class="col text-center">
+        <h5 class="card-subtitle mt-3 contributors opacity-50"> "Have an idea you want to share? You should submit it!"</h5>
+        <form class="mt-3" action="/story/<%= story.story_id %>/contribute" method="get">
+          <button class="btn btn-outline-primary" style="border-radius: 5em;" type="submit">Contribute</button>
+        </form>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+
     <script>
       function handleToggle(storyId, user_id) {
         const toggleButton = document.getElementById('toggleButton');
@@ -101,7 +111,6 @@
             console.error('Error updating story status:', error);
           });
       }
-
     </script>
 </body>
 
