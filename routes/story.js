@@ -56,7 +56,7 @@ router.post('/', async (req, res) => {
 
       });
 
-      console.log("Successful insertion:", result);
+      // console.log("Successful insertion:", result);
       res.redirect('/home'); // Redirect to a success page or any other page after successful insertion.
     } catch (error) {
       console.error("Error inserting story:", error.message);
@@ -94,13 +94,13 @@ router.get('/:id/toggle', (req, res) => {
 router.post('/:id/toggle', (req, res) => {
   const storyId = req.params.id;
   const user_id = req.session.userid;
-  console.log('user_Id : ' + user_id, 'storyId: ' + storyId);
+  // console.log('user_Id : ' + user_id, 'storyId: ' + storyId);
   // Update the database with the new completed status
   storyQueries.toggleCompleted(storyId, user_id)
     .then(() => {
       //res.sendStatus(200); // Send a success response to the client
       res.redirect(`/story/${req.params.id}`);
-      console.log('user: ' + user_id, 'story: ' + storyId);
+      // console.log('user: ' + user_id, 'story: ' + storyId);
     })
     .catch(error => {
       console.error('Error updating story status:', error);
@@ -123,19 +123,36 @@ router.get('/:id', (req, res) => {
 
     })
     .then(data => {
-      const templateVars = {
-        story,
-        addedContributions,
-        userId: parseInt(req.session.userid),
-        username: data.username
-      };
+      let templateVars = {};
+      if (!req.session.userid) {
+        templateVars = {
+          story,
+          addedContributions,
+          userId: null,
+          username: null
+        };
+      } else {
+        templateVars = {
+          story,
+          addedContributions,
+          userId: parseInt(req.session.userid),
+          username: data.username
+        };
+      }
+
+
+
       res.render('story', templateVars);
     });
 });
 
 router.get('/:id/contribute', (req, res) => {
   if (!req.session.userid) {
-    return res.render('login-error');
+    const templateVars = {
+      userId: null,
+      username: null
+    };
+    return res.render('login-error', templateVars);
   }
   let story = {};
   let contributions = {};
@@ -148,12 +165,12 @@ router.get('/:id/contribute', (req, res) => {
       return contributionQueries.getContributionsForStory(req.params.id);
     })
     .then(data => {
-      console.log(data);
+      // console.log(data);
       contributions = data;
       return upvotedContsQueries.getUpvotedContributions(req.session.userid);
     })
     .then(data => {
-      console.log(data);
+      // console.log(data);
       for (const upvotedCont of data) {
         upvotedContributions.push(upvotedCont.contribution_id);
       }
@@ -183,7 +200,7 @@ router.post('/:id/contribute', (req, res) => {
   newContribution.storyId = req.params.id;
   newContribution.userId = req.session.userid;
 
-  console.log('newContribution', newContribution);
+  // console.log('newContribution', newContribution);
 
   contributionQueries.addContribution(newContribution)
     .then(() => res.redirect(`/story/${req.params.id}/contribute`));

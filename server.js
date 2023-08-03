@@ -60,7 +60,7 @@ const favoriteStoriesRoute = require('./routes/favorite-stories');
 app.use('/home', homeRoute);
 app.use('/story', storyRoute);
 app.use('/my-stories', myStoriesRoute);
-app.use('/favorite-stories',favoriteStoriesRoute);
+app.use('/favorite-stories', favoriteStoriesRoute);
 // Note: mount other resources here, using the same pattern above
 
 // Home page
