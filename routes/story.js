@@ -224,10 +224,6 @@ router.post('/:id/append', (req, res) => {
       return contributionQueries.markAddedToStory(contributionId);
 
     })
-    .then(() => {
-
-      // return contributionQueries.removeContribution(contributionId);
-    })
     .then(() => res.redirect(`/story/${req.params.id}/contribute`));
 });
 

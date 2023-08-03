@@ -1,14 +1,14 @@
 const db = require('../connection');
 
 const getContributionsForStory = (storyId) => {
-  return db.query('SELECT * FROM contributions WHERE story_id = $1 AND added_to_story IS FALSE ORDER BY created_at;', [storyId])
+  return db.query('SELECT * FROM contributions WHERE story_id = $1 AND added_to_story IS FALSE ORDER BY id;', [storyId])
     .then(data => {
       return data.rows;
     });
 };
 
 const getCompletedContsForStory = (storyId) => {
-  return db.query('SELECT users.username, contributions.contribution_content FROM contributions JOIN users ON user_id = users.id WHERE story_id = $1 AND added_to_story IS TRUE ORDER BY created_at;', [storyId])
+  return db.query('SELECT users.username, contributions.contribution_content FROM contributions JOIN users ON user_id = users.id WHERE story_id = $1 AND added_to_story IS TRUE ORDER BY contributions.id;', [storyId])
     .then(data => {
       return data.rows;
     });
