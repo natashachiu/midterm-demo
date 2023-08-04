@@ -4,68 +4,71 @@ body {
   min-height: 100vh;
 
   background: rgb(163, 208, 219);
-  background: linear-gradient(
-    227deg,
-    rgba(163, 208, 219, 1) 0%,
-    rgba(163, 176, 219, 1) 20%,
-    rgba(163, 173, 219, 1) 34%,
-    rgba(163, 219, 208, 1) 59%,
-    rgba(163, 208, 219, 1) 74%,
-    rgba(163, 208, 219, 1) 100%
-  );
+  background: linear-gradient(227deg,
+      rgba(163, 208, 219, 1) 0%,
+      rgba(163, 176, 219, 1) 20%,
+      rgba(163, 173, 219, 1) 34%,
+      rgba(163, 219, 208, 1) 59%,
+      rgba(163, 208, 219, 1) 74%,
+      rgba(163, 208, 219, 1) 100%);
 
-header {
-display: flex;
-flex-direction: row;
-justify-self: flex-start;
-align-self: center;
-}
-
-#stories {
-  align-items: center;
-  margin-top: .25em;
-}
-
-#fav_stories {
-  align-items: center;
-  margin-top: .25em;
-}
-
-@media screen and (min-width: 992px){
-#new_story{
-  border-radius: 20em;
-}
-}
-@media screen and (max-width: 992px){
-#new_story{
-  border-radius: 7em;
-}
-}
-
-@media screen and (min-width: 992px){
-#story_page{
-  border-radius: 8em;
-}
-}
-@media screen and (max-width: 992px){
-#story_page{
-  border-radius: 7em;
-}
-}
-
-@media screen and (min-width: 768px){
-  #home_page_clouds{
-    border-radius: 2em;
-    height: 12em;
-  }
+  header {
+    display: flex;
+    flex-direction: row;
+    justify-self: flex-start;
+    align-self: center;
   }
 
-@media screen and (min-width: 768px){
-  #page_clouds{
-    border-radius: 2em;
-    height: 12em;
+  #stories {
+    align-items: center;
+    margin-top: .25em;
   }
+
+  #fav_stories {
+    align-items: center;
+    margin-top: .25em;
+  }
+
+  @media screen and (min-width: 992px) {
+    #new_story {
+      border-radius: 20em;
+    }
+  }
+
+  @media screen and (max-width: 992px) {
+    #new_story {
+      border-radius: 7em;
+    }
+  }
+
+  @media screen and (min-width: 992px) {
+    #story_page {
+      border-radius: 8em;
+    }
+  }
+
+  @media screen and (max-width: 992px) {
+    #story_page {
+      border-radius: 7em;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    #home_page_clouds {
+      border-radius: 2em;
+      height: 12em;
+    }
+  }
+
+  @media screen and (min-width: 768px) {
+    #page_clouds {
+      border-radius: 2em;
+      height: 12em;
+    }
   }
 
 }
 
+.card:hover {
+  box-shadow: 4px 4px 6px 0 rgba(0, 0, 0, 0.24)
+}

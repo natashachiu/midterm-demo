@@ -8,27 +8,30 @@
 
         <div class="col">
           <div class="card justify-content-start" id="page_clouds" style=" border-color: rgba(59, 59, 59, 0.161);">
-            <a href="/story/<%=story.story_id%>/contribute" style="color: black; text-decoration: none;"> <div class="card-body">
-              <h2 class="card-title"><%=story.title%></h2>
-              <div class="card-subtitle d-flex justify-content-between mb-3">
-                <span style="font-size: medium; opacity: 60%;">By <%=story.username%></span>
-                <% if(story.completed){%>
-                  <span class="text-success fst-italic">
-                    Complete
-                  </span>
-                  <%}%>
+            <a href="/story/<%=story.story_id%>/contribute" style="color: black; text-decoration: none;">
+              <div class="card-body">
+                <h2 class="card-title">
+                  <%=story.title%>
+                </h2>
+                <div class="card-subtitle d-flex justify-content-between mb-3">
+                  <span style="font-size: medium; opacity: 60%;">By <%=story.username%></span>
+                  <% if(story.completed){%>
+                    <span class="text-success fst-italic me-2">
+                      Complete
+                    </span>
+                    <%}%>
                 </div>
-              <div class="card-subtitle mt-1">
-              "<%= story.description %>"
+                <div class="card-subtitle mt-1">
+                  "<%= story.description %>"
+                </div>
+                <div class="text"></div>
               </div>
-              <div class="text"></div>
-            </div>
           </div>
-        </a>
+          </a>
         </div>
-  <%}%>
-      </div>
+        <%}%>
     </div>
+  </div>
 
 
   </body>
